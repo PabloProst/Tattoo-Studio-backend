@@ -10,7 +10,11 @@
   "author": "pablo prost",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt": "^5.0.1",
+    "@types/jsonwebtoken": "^9.0.4",
+    "bcrypt": "^5.1.1",
     "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.6.2",
     "reflect-metadata": "^0.1.13",
     "save": "^2.9.0",

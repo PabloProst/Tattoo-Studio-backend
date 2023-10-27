@@ -1,9 +1,16 @@
-import { Router } from "express";
-import { addUser } from "../controllers/usersControllers";
+import { addUser, deleteUserById, login } from "../controllers/usersControllers";
+import express from 'express';
+const router = express.Router();
 
-const router = Router ();
 
 // User register
 router.post('/register', addUser);
 
-export { Router };
+// User login
+router.post('/login', login)
+
+// User delete
+router.delete('/:id', deleteUserById)
+
+
+export { router };

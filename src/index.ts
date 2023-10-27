@@ -1,6 +1,7 @@
 // Express import
-import express, { Request, Response, Router } from "express";
+import express, { Request, Response } from "express";
 import { AppDataSource } from "./db";
+import { router } from "./routes/usersRoutes";
 const app = express();
 
 // Port
@@ -10,7 +11,7 @@ const PORT = process.env.PORT || 3430;
 app.use(express.json());
 
 
-app.use('/studio', Router);
+app.use('/', router);
 
 // Server running
 app.listen(3430, () => 

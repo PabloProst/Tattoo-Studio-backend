@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm"
 
-export class User1698219747209 implements MigrationInterface {
+export class Users1698307818959 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
 
@@ -18,18 +18,21 @@ export class User1698219747209 implements MigrationInterface {
                     {
                         name: "name",
                         type: "varchar",
-                        length: "255",
+                        length: "50",
+                        isNullable: false,
                     },
                     {
                         name: "email",
                         type: "varchar",
-                        length: "100"
+                        length: "100",
+                        isNullable: false,
                     },
                     {
                         name: "password",
                         type: "varchar",
-                        length: "200"
-                    },                 
+                        length: "200",
+                        isNullable: false,
+                    },
                     {
                         name: "created_at",
                         type: "timestamp",
@@ -45,10 +48,9 @@ export class User1698219747209 implements MigrationInterface {
             }),
             true
         );
-
-
-
     }
+
+
 
     public async down(queryRunner: QueryRunner): Promise<void> {
     }

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { User } from "../models/User";
+import jwt from "jsonwebtoken";
 
 // User register
 const addUser = async (req: Request, res: Response) => {
@@ -69,7 +70,7 @@ const login = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(400).json(
         {
-          success: true,
+          success: false,
           message: `Email or password incorrect`,
         }
       );
@@ -78,16 +79,29 @@ const login = async (req: Request, res: Response) => {
     if (!bcrypt.compareSync(password, user.password)) {
       return res.status(400).json(
         {
-          success: true,
+          success: false,
           message: `Email or password incorrect`,
         }
       );
     }
 
+    // Generar el token
+    const token = jwt.sign(
+      {
+        id: user.id,
+        email: user.email
+      },
+      "secreto",
+      {
+        expiresIn: "3h",
+      }
+    );
+
     return res.json({
       success: true,
       message: `Login successful, welcome ${user.name}`,
-      user: user
+      user: user,
+      token: token  // Agregar el token a la respuesta
     });
 
   } catch (error) {
@@ -100,7 +114,6 @@ const login = async (req: Request, res: Response) => {
     );
   }
 }
-
 // Delete user
 const deleteUserById = async (req: Request, res: Response) => {
   try {

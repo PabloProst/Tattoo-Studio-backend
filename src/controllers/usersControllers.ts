@@ -85,13 +85,13 @@ const login = async (req: Request, res: Response) => {
       );
     }
 
-    // Generar el token
+    // Generate token
     const token = jwt.sign(
       {
         id: user.id,
         email: user.email
       },
-      "secreto",
+      "geekshubs",
       {
         expiresIn: "3h",
       }
@@ -101,7 +101,7 @@ const login = async (req: Request, res: Response) => {
       success: true,
       message: `Login successful, welcome ${user.name}`,
       user: user,
-      token: token  // Agregar el token a la respuesta
+      token: token 
     });
 
   } catch (error) {
@@ -114,6 +114,7 @@ const login = async (req: Request, res: Response) => {
     );
   }
 }
+
 // Delete user
 const deleteUserById = async (req: Request, res: Response) => {
   try {

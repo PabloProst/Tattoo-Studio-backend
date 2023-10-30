@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import bcrypt from "bcrypt";
-import { User } from "../models/User";
 import jwt from "jsonwebtoken";
+import { User } from "../models/User";
+import bcrypt from "bcrypt";
 
 // User register
 const addUser = async (req: Request, res: Response) => {
@@ -67,6 +67,7 @@ const login = async (req: Request, res: Response) => {
       }
     });
 
+    // Check user
     if (!user) {
       return res.status(400).json(
         {
@@ -100,8 +101,9 @@ const login = async (req: Request, res: Response) => {
     return res.json({
       success: true,
       message: `Login successful, welcome ${user.name}`,
-      user: user,
-      token: token 
+      user_id: user.id,
+      email: user.email,
+      token: token
     });
 
   } catch (error) {
@@ -136,4 +138,32 @@ const deleteUserById = async (req: Request, res: Response) => {
   }
 }
 
-export { addUser, deleteUserById, login };
+// Profile
+const profile = async (req: Request, res: Response) => {
+  try{
+      const user = await User.findOneBy(
+          {
+              id: req.token.id
+          }
+      )
+
+      return res.json(
+          {
+              success: true,
+              message: "profile user retrieved",
+              data: user
+          }
+      )
+  } catch (error) {
+      return res.json(
+        {
+          success: false,
+          message: "User profile cant be retrieved",
+          error: error
+        }
+      )
+  }
+}
+
+
+export { addUser, deleteUserById, login, profile };

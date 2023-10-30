@@ -1,7 +1,8 @@
 // Express import
-import express, { Request, Response } from "express";
+import express from "express";
 import { AppDataSource } from "./db";
 import { router } from "./routes/usersRoutes";
+
 const app = express();
 
 // Port

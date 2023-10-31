@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addUser, deleteUserById, login, profile } from "../controllers/usersControllers";
+import { addUser, login, profile, updateUser } from "../controllers/usersControllers";
 import { auth } from "../middlewares/auth";
 
 const router = Router()
@@ -10,7 +10,7 @@ router.post('/register', addUser);
 router.post('/login', login);
 // Profile
 router.get('/profile', auth, profile);
-// User delete
-router.delete('/:id', deleteUserById);
+// Update user
+router.put('/update', auth, updateUser);
 
 export { router };

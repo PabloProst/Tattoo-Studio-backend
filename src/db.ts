@@ -1,9 +1,9 @@
 import "reflect-metadata"
 import { DataSource } from "typeorm"
 import { User } from "./models/User"
-import { Artist1698227867755 } from "./migration/1698227867755-artist"
 import { Artist } from "./models/Artists"
-import { Users1698307818959 } from "./migration/1698307818959-users"
+import { Users1698741920671 } from "./migration/1698741920671-users"
+import { Artists1698741946315 } from "./migration/1698741946315-artists"
 export const AppDataSource = new DataSource({
 type: "mysql",
 host: "localhost",
@@ -12,7 +12,7 @@ username: "root",
 password: "Valencia22",
 database: "tattoo_studio",
 entities: [User, Artist],
-migrations: [Artist1698227867755, Users1698307818959],
+migrations: [Users1698741920671,Artists1698741946315],
 synchronize: false,
 logging: false,
 })

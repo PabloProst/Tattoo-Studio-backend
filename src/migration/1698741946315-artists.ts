@@ -1,6 +1,6 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm"
 
-export class Artist1698227867755 implements MigrationInterface {
+export class Artists1698741946315 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
 
@@ -18,37 +18,52 @@ export class Artist1698227867755 implements MigrationInterface {
                     {
                         name: "name",
                         type: "varchar",
-                        length: "255",
+                        length: "50",
+                        isNullable: false,
                     },
                     {
                         name: "email",
                         type: "varchar",
-                        length: "100"
+                        length: "100",
+                        isNullable: false,
                     },
                     {
                         name: "password",
                         type: "varchar",
-                        length: "200"
-                    },                 
+                        length: "200",
+                        isNullable: false
+                    },
+                    {
+                        name: "style",
+                        type: "varchar",
+                        length: "200",
+                        isNullable: false,
+                    },
+                    {
+                        name: 'role',
+                        type: 'enum',
+                        enum: ['admin', 'superadmin'],
+                        enumName: 'roleEnum',
+                        default: '"admin"'
+                    },
                     {
                         name: "created_at",
                         type: "timestamp",
-                        default: "CURRENT_TIMESTAMP",                        
+                        default: "CURRENT_TIMESTAMP",
                     },
                     {
                         name: "updated_at",
                         type: "timestamp",
                         default: "CURRENT_TIMESTAMP",
-                        onUpdate: "CURRENT_TIMESTAMP"                 
+                        onUpdate: "CURRENT_TIMESTAMP"
                     },
                 ],
             }),
             true
         );
-
-
-
     }
+
+
 
     public async down(queryRunner: QueryRunner): Promise<void> {
     }

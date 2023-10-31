@@ -10,7 +10,11 @@ export class Artist extends BaseEntity {
     @Column()
     email!: string
     @Column()
+    style!: string
+    @Column()
     password!: string
+    @Column()
+    role!: string
     @Column()
     created_at!: Date
     @Column()

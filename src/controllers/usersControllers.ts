@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
+import { Artist } from "../models/Artists";
 
 // User register
 const addUser = async (req: Request, res: Response) => {
@@ -183,5 +184,38 @@ const updateUser = async (req: Request, res: Response) => {
   }
 }
 
+// List artists
+const getArtists = async (req: Request, res: Response) => {
+  try {
 
-export { addUser, login, profile, updateUser };
+    const pageSize = parseInt(req.query.skip as string) || 10
+    const page = parseInt(req.query.page as string) || 1
+
+    const skip = (page - 1) * pageSize;
+
+    const users = await Artist.find({
+      skip: skip,
+      take: pageSize,
+    });
+
+    return res.json(
+      {
+        success: true,
+        message: `Artists retrieved`,
+        data: users
+      }
+    )
+
+  } catch (error) {
+    return res.json(
+      {
+        success: false,
+        message: `users cant be retrieved`,
+        error: error
+      }
+    )
+  }
+}
+
+
+export { addUser, login, profile, updateUser, getArtists };

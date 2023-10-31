@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { addUser, login, profile, updateUser } from "../controllers/usersControllers";
+import { addUser, getArtists, login, profile, updateUser } from "../controllers/usersControllers";
 import { auth } from "../middlewares/auth";
+
 
 const router = Router()
 
@@ -12,5 +13,7 @@ router.post('/login', login);
 router.get('/profile', auth, profile);
 // Update user
 router.put('/update', auth, updateUser);
+// Get artists list
+router.get('/list', auth, getArtists)
 
 export { router };

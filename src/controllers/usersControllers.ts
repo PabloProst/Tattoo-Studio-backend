@@ -4,6 +4,7 @@ import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import { Artist } from "../models/Artists";
 import { Gallery } from "../models/Gallery";
+import { Appointment } from "../models/Appointments";
 
 // User register
 const addUser = async (req: Request, res: Response) => {
@@ -242,6 +243,48 @@ const getGallery = async (req: Request, res: Response) => {
   }
 };
 
+// New appointment
+const newAppointment = async (req: Request, res: Response) => {
+  try {
+    const userId = parseInt(req.body.user, 10);
+    const artistId = parseInt(req.body.artist, 10);
+    const time = req.body.time;
+
+    if (isNaN(userId) || isNaN(artistId)) {
+      return res.json({
+        success: false,
+        message: "El ID del usuario o del artista no es válido.",
+      });
+    }
+
+    const user = await User.findOne(userId);
+    const artist = await Artist.findOne(artistId);    
+
+    const appointment = Appointment.create({
+      user,
+      artist,
+      time,
+      created_at: new Date(),
+      updated_at: new Date(),
+    });
+
+    await Appointment.save();
+
+    return res.json({
+      success: true,
+      message: "Cita creada exitosamente.",
+      appointment,
+    });
+
+  } catch (error) {
+    console.error(error);
+    return res.json({
+      success: false,
+      message: "Error al reservar una cita.",
+      error: error,
+    });
+  }
+};
 
 
-export { addUser, login, profile, updateUser, getArtists, getGallery};
+export { addUser, login, profile, updateUser, getArtists, getGallery, newAppointment};

@@ -48,7 +48,7 @@ export class Appointments1698917658754 implements MigrationInterface {
                         onDelete: "CASCADE",
                     },
                     {
-                        columnNames: ["user_id"], // Corregido el nombre de la columna
+                        columnNames: ["user_id"],
                         referencedTableName: "users",
                         referencedColumnNames: ["id"],
                         onDelete: "CASCADE",

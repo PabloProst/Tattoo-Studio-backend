@@ -1,17 +1,24 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from "typeorm"
-import { Artist } from "./Artists"; // Asegúrate de importar la entidad Artist
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
+import { Artist } from "./Artists";
 
 @Entity("gallery")
 export class Gallery extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id!: number
-    @Column()
-    tattoo!: string
-    @Column()
-    artist_id!: number
+    tattoo_id!: number
 
-    @ManyToOne(() => Artist, artist => artist.id) // Corregido para reflejar la relación entre Gallery y Artist
-    @JoinColumn({ name: "artist_id" }) 
-    artist!: Artist; 
+    @Column()
+    description!: string
+
+    @Column()
+    image_url!: string
+
+    @Column()
+    created_at!: Date
+
+    @Column()
+    updated_at!: Date
+
+    @ManyToOne(() => Artist, artist => artist.gallery)
+    artist!: Artist
 }

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addUser, getArtists, getGallery, login, profile, updateUser } from "../controllers/usersControllers";
+import { addUser, getArtists, getGallery, login, newAppointment, profile, updateUser } from "../controllers/usersControllers";
 import { auth } from "../middlewares/auth";
 
 
@@ -17,5 +17,7 @@ router.put('/update', auth, updateUser);
 router.get('/list', auth, getArtists);
 // Get tattoo list
 router.get('/gallery', auth, getGallery);
+//  New appointment
+router.post('/appointment', auth, newAppointment)
 
 export { router };

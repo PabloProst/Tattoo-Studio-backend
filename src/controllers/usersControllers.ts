@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import { Artist } from "../models/Artists";
+import { Gallery } from "../models/Gallery";
 
 // User register
 const addUser = async (req: Request, res: Response) => {
@@ -217,5 +218,30 @@ const getArtists = async (req: Request, res: Response) => {
   }
 }
 
+// Get tattoo list
+const getGallery = async (req: Request, res: Response) => {
+  try {
+    const gallery = await Gallery.find();
 
-export { addUser, login, profile, updateUser, getArtists };
+    return res.json(
+      {
+        success: true,
+        message: `Gallery retrieved`,
+        data: gallery
+      }
+    );
+
+  } catch (error) {
+    return res.json(
+      {
+        success: false,
+        message: `Gallery cant be retrieved`,
+        error: error
+      }
+    );
+  }
+};
+
+
+
+export { addUser, login, profile, updateUser, getArtists, getGallery};

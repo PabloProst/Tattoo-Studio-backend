@@ -6,7 +6,7 @@ import { Artist } from "./Artists";
 export class Appointment extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    appointment_id!: number
+    id!: number 
 
     @Column()
     time!: string

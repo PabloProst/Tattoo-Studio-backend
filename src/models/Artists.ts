@@ -24,7 +24,7 @@ export class Artist extends BaseEntity {
     updated_at!: Date
 
     @OneToMany(() => Appointment, appointment => appointment.artist)
-    appointments!: Appointment[];
+    appointments!: Appointment[];    
 
     @OneToMany(() => Gallery, gallery => gallery.artist)
     gallery!: Gallery[];

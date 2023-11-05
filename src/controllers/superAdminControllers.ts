@@ -2,11 +2,12 @@ import { Request, Response } from "express";
 import { Artist } from "../models/Artists";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { User } from "../models/User";
 
 // New artist
 const addArtist = async (req: Request, res: Response) => {
     try {
-        const { name, email, password, role } = req.body;
+        const { name, email, password, style, role } = req.body;
 
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
@@ -28,6 +29,7 @@ const addArtist = async (req: Request, res: Response) => {
             name: name,
             email: email,
             password: encryptedPassword,
+            style: style,
             role: role
         }).save();
 
@@ -65,7 +67,7 @@ const loginArtist = async (req: Request, res: Response) => {
         return res.status(400).json(
           {
             success: false,
-            message: `Email or password incorrect`,
+            message: `EMAIL or password incorrect`,
           }
         );
       }
@@ -74,7 +76,7 @@ const loginArtist = async (req: Request, res: Response) => {
         return res.status(400).json(
           {
             success: false,
-            message: `Email or password incorrect`,
+            message: `Email or PASSWORD incorrect`,
           }
         );
       }
@@ -97,7 +99,8 @@ const loginArtist = async (req: Request, res: Response) => {
         message: `Login successful, welcome ${artist.name}`,
         user_id: artist.id,
         email: artist.email,
-        token: token
+        token: token,
+        role: artist.role
       });
   
     } catch (error) {
@@ -111,5 +114,26 @@ const loginArtist = async (req: Request, res: Response) => {
     }
   }
 
-export { addArtist, loginArtist }
+
+  // Get all users
+const getAllUsers =async (req: Request, res: Response) => {
+    try {
+        const users = await User.find();
+
+        return res.json({
+            users
+        });
+
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: `Users can't be retrieved`,
+            error: error
+        });
+    }
+};
+
+
+
+export { addArtist, loginArtist, getAllUsers }
 

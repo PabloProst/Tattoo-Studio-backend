@@ -54,69 +54,69 @@ const addArtist = async (req: Request, res: Response) => {
 // Login
 const loginArtist = async (req: Request, res: Response) => {
     try {
-      const email = req.body.email;
-      const password = req.body.password;
-  
-      const artist = await Artist.findOne({
-        where: {
-          email: email
+        const email = req.body.email;
+        const password = req.body.password;
+
+        const artist = await Artist.findOne({
+            where: {
+                email: email
+            }
+        });
+
+        if (!artist) {
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: `EMAIL or password incorrect`,
+                }
+            );
         }
-      });
-  
-      if (!artist) {
-        return res.status(400).json(
-          {
-            success: false,
-            message: `EMAIL or password incorrect`,
-          }
-        );
-      }
-  
-      if (!bcrypt.compareSync(password, artist.password)) {
-        return res.status(400).json(
-          {
-            success: false,
-            message: `Email or PASSWORD incorrect`,
-          }
-        );
-      }
-  
-      // Generate token
-      const token = jwt.sign(
-        {
-          id: artist.id,
-          email: artist.email,
-          role: artist.role
-        },
-        "geekshubs",
-        {
-          expiresIn: "3h",
+
+        if (!bcrypt.compareSync(password, artist.password)) {
+            return res.status(400).json(
+                {
+                    success: false,
+                    message: `Email or PASSWORD incorrect`,
+                }
+            );
         }
-      );
-  
-      return res.json({
-        success: true,
-        message: `Login successful, welcome ${artist.name}`,
-        user_id: artist.id,
-        email: artist.email,
-        token: token,
-        role: artist.role
-      });
-  
+
+        // Generate token
+        const token = jwt.sign(
+            {
+                id: artist.id,
+                email: artist.email,
+                role: artist.role
+            },
+            "geekshubs",
+            {
+                expiresIn: "3h",
+            }
+        );
+
+        return res.json({
+            success: true,
+            message: `Login successful, welcome ${artist.name}`,
+            user_id: artist.id,
+            email: artist.email,
+            token: token,
+            role: artist.role
+        });
+
     } catch (error) {
-      return res.status(500).json(
-        {
-          success: false,
-          message: `Error during login.`,
-          error: error
-        }
-      );
+        return res.status(500).json(
+            {
+                success: false,
+                message: `Error during login.`,
+                error: error
+            }
+        );
     }
-  }
+}
 
 
-  // Get all users
-const getAllUsers =async (req: Request, res: Response) => {
+// Get all users
+const getAllUsers = async (req: Request, res: Response) => {
     try {
         const users = await User.find();
 
@@ -133,7 +133,24 @@ const getAllUsers =async (req: Request, res: Response) => {
     }
 };
 
+// Delete user
+const deleteUser = async (req: Request, res: Response) => {
+    try {
+        const idUser = req.body.id
+        await User.delete({ id: idUser });
+        return res.json({
+            message: `User was deleted`
+        })
+    } catch (error) {
+        return res.json({
+            success: false,
+            message: `User can't be deleted`,
+            error: error
+        }
+        )
+    }
+}
 
 
-export { addArtist, loginArtist, getAllUsers }
+export { addArtist, loginArtist, getAllUsers, deleteUser }
 

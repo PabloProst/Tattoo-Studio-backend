@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isSuperAdmin } from "../middlewares/isSuperAdmin";
-import { addArtist, getAllUsers, loginArtist } from "../controllers/superAdminControllers";
+import { addArtist, deleteUser, getAllUsers, loginArtist } from "../controllers/superAdminControllers";
 import { auth } from "../middlewares/auth";
 
 
@@ -12,5 +12,7 @@ router.post('/admin/register',auth, isSuperAdmin, addArtist)
 router.post('/admin/login', loginArtist)
 // Users list
 router.get('/admin/users',auth, isSuperAdmin, getAllUsers)
+// Delete user
+router.delete('/admin/delete', auth, isSuperAdmin, deleteUser)
 
 export { router }

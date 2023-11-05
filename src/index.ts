@@ -3,6 +3,7 @@ import express from "express";
 import { AppDataSource } from "./db";
 import { router } from "./routes/usersRoutes";
 import { router as routerGallery } from "./routes/galleryRoutes";
+import { router as routerAdmin } from "./routes/superAdminRoutes";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(express.json());
 
 app.use('/', router);
 app.use('/', routerGallery)
+app.use('/', routerAdmin)
 
 // Server running
 app.listen(3430, () => 

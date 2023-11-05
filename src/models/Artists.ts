@@ -6,7 +6,7 @@ import { Gallery } from "./Gallery";
 export class Artist extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    artist_id!: number
+    id!: number
 
     @Column()
     name!: string
@@ -16,6 +16,12 @@ export class Artist extends BaseEntity {
 
     @Column()
     password!: string
+
+    @Column()
+    style!: string
+
+    @Column()
+    role!: string
 
     @Column()
     created_at!: Date

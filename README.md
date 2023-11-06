@@ -96,6 +96,18 @@ Git
             {
                 "id": "1"
             }
+ 
+    - NEW APPOINTMENT
+
+            POST http://localhost:3430/appointment/new
+
+
+            {
+                "user": 1,
+                "artist": 1,
+                "time": "2023-12-20T15:30:00.000Z"
+            }
+ 
 
 ## Licencia
 Este proyecto se encuentra bajo licencia de "Pablo Prost"

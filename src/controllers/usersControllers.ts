@@ -144,7 +144,7 @@ const profile = async (req: Request, res: Response) => {
 // Update user
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const userId = req.token.id;
+    const iddeuser = req.token.id;
     const { email, password } = req.body;
 
     if (email) {
@@ -166,11 +166,11 @@ const updateUser = async (req: Request, res: Response) => {
 
       const encryptedPassword = bcrypt.hashSync(password, 10);
 
-      await User.update(userId, { password: encryptedPassword });
+      await User.update(iddeuser, { password: encryptedPassword });
     }
 
     if (email) {
-      await User.update(userId, { email });
+      await User.update(iddeuser, { email });
     }
 
     return res.json({

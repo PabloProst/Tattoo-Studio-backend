@@ -1,5 +1,6 @@
+// User.ts
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { Appointment } from "./Appointments"
+import { Appointment } from "./Appointments";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -24,5 +25,4 @@ export class User extends BaseEntity {
 
     @OneToMany(() => Appointment, appointment => appointment.user)
     appointments!: Appointment[];
-    
 }

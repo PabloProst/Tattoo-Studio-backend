@@ -1,3 +1,4 @@
+// Artist.ts
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Appointment } from "./Appointments";
 import { Gallery } from "./Gallery";

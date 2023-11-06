@@ -4,22 +4,27 @@ import { Artist } from "./Artists";
 
 @Entity("appointments")
 export class Appointment extends BaseEntity {
-
     @PrimaryGeneratedColumn()
-    id!: number 
+    id!: number;
 
     @Column()
-    time!: string
+    userId!: string;
 
     @Column()
-    created_at!: Date
+    artistId!: string;
 
     @Column()
-    updated_at!: Date
+    time!: string;
+
+    @Column()
+    created_at!: Date;
+
+    @Column()
+    updated_at!: Date;
 
     @ManyToOne(() => User, user => user.appointments)
-    user!: User
+    user!: User;
 
     @ManyToOne(() => Artist, artist => artist.appointments)
-    artist!: Artist
+    artist!: Artist;
 }

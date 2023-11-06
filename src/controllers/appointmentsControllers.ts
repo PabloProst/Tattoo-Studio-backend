@@ -6,6 +6,14 @@ import { Appointment } from '../models/Appointments';
 const createAppointment = async (req: Request, res: Response) => {
     try {
         const { user, artist, time } = req.body;
+        const dateFormatRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/;
+
+        if (!dateFormatRegex.test(time)) {
+            return res.status(400).json({
+                success: false,
+                message: "El formato de la fecha es incorrecto. Debe ser dd/mm/yy",
+            });
+        }
 
         const appointment = new Appointment();
         appointment.user = user;
@@ -28,39 +36,28 @@ const createAppointment = async (req: Request, res: Response) => {
             error: error,
         });
     }
-};
+}; 
 
-// Update appointment
+
+// Edit appointment
 const editAppointment = async (req: Request, res: Response) => {
     try {
-      if (req.token.id === req.body.user_id) {  
-        const appointmentToUpdate = req.body.id
-        const id = req.body.id;
-        const user = req.body.user;
-        const artist = req.body.artist;
-        const time = req.body.time;
-    
+      console.log("entro al try");
+  
+      const tokenGiven = req.token.id;
+      const { id, user, artist, time } = req.body;
+  
+      if (tokenGiven === user) {
+        const appointmentToUpdate = id;
+  
         await Appointment.update(
-          {
-            id: parseInt(appointmentToUpdate),
-          },
-          {
-            id: id,
-            user: user,
-            artist: artist,
-            time: time
-          }
+          { id: parseInt(appointmentToUpdate) },
+          { id, user, artist, time }
         );
   
-        const updatedAppointment = await Appointment.findOneBy({
-          id: parseInt(appointmentToUpdate),
-        });
-  
-        const response = {
-          updatedAppointment,
-        };
-  
-        return res.json(response);
+        return res.json();
+      } else {
+        return res.json({ mensaje: "Invalid user_id" });
       }
     } catch (error) {
       return res.json(error);

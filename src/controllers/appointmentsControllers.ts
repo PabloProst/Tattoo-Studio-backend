@@ -29,46 +29,53 @@ const createAppointment = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.log(error);
-        
+
         return res.status(500).json({
             success: false,
             message: "Error al crear la cita",
             error: error,
         });
     }
-}; 
+};
 
 
 // Edit appointment
-const editAppointment = async (req: Request, res: Response) => {
+const editAppointment = async (req: Request, res:Response) => {
     try {
-      console.log("entro al try");
-  
-      const tokenGiven = req.token.id;
-      const { id, user, artist, time } = req.body;
-  
-      if (tokenGiven === user) {
-        const appointmentToUpdate = id;
-  
-        await Appointment.update(
-          { id: parseInt(appointmentToUpdate) },
-          { id, user, artist, time }
-        );
-  
-        return res.json();
-      } else {
-        return res.json({ mensaje: "Invalid user_id" });
-      }
+        const { user, artist, time } = req.body;
+
+        const query = `
+            UPDATE appointments
+            SET user_id = ?, artist_id = ?, time = ?
+            WHERE id = ?;
+        `;
+        const values = [user, artist, time, req.params.appointmentId]; 
+
+        await Appointment.query(query, values);
+
+        return res.json({
+            success: true,
+            message: "Cita actualizada exitosamente",
+        });
+
     } catch (error) {
-      return res.json(error);
+        console.log(error);
+        return res.status(500).json({
+            success: false,
+            message: "Error al editar la cita",
+            error: error,
+        });
     }
-  };
-  
+};
+
+
+
 
 // Delete appointment
-const deleteAppointment = async (req: Request, res: Response) => {
+const deleteAppointment = async (req:Request, res:Response) => {
     try {
         const { id } = req.body;
+
         const appointment = await Appointment.findOne(id);
 
         if (!appointment) {
@@ -77,15 +84,17 @@ const deleteAppointment = async (req: Request, res: Response) => {
                 message: "Cita no encontrada",
             });
         }
+
         await appointment.remove();
 
         return res.json({
             success: true,
             message: "Cita eliminada exitosamente",
         });
+
     } catch (error) {
         console.log(error);
-        
+
         return res.status(500).json({
             success: false,
             message: "Error al eliminar la cita",
@@ -94,4 +103,5 @@ const deleteAppointment = async (req: Request, res: Response) => {
     }
 };
 
-export {createAppointment, editAppointment, deleteAppointment}
+
+export { createAppointment, editAppointment, deleteAppointment }

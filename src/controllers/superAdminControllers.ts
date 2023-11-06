@@ -133,23 +133,35 @@ const getAllUsers = async (req: Request, res: Response) => {
     }
 };
 
+
 // Delete user
 const deleteUser = async (req: Request, res: Response) => {
     try {
-        const idUser = req.body.id
-        await User.delete({ id: idUser });
-        return res.json({
-            message: `User was deleted`
-        })
+        const idUser = req.body.id;
+        const user = await User.findOneBy({ id: idUser });
+
+        if (user) {
+            await User.delete({ id: idUser });
+            return res.json({
+                message: `Usuario fue eliminado`
+            });
+        } else {
+            return res.json({
+                success: false,
+                message: `Usuario no encontrado`
+            });
+        }
+
     } catch (error) {
         return res.json({
             success: false,
-            message: `User can't be deleted`,
+            message: `No se pudo eliminar el usuario`,
             error: error
-        }
-        )
+        });
     }
 }
+
+
 
 
 export { addArtist, loginArtist, getAllUsers, deleteUser }

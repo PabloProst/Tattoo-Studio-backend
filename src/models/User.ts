@@ -1,8 +1,9 @@
 // User.ts
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn, OneToMany, Unique } from "typeorm";
 import { Appointment } from "./Appointments";
 
 @Entity("users")
+@Unique(["email"])
 export class User extends BaseEntity {
 
     @PrimaryGeneratedColumn()

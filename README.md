@@ -107,7 +107,14 @@ Git
                 "artist": 1,
                 "time": "2023-12-20T15:30:00.000Z"
             }
+
+     - GET USER APPOINTMENTS 
+
+            GET http://localhost:3430/myappointments
  
+           {
+                "id": "11"
+           }
 
 ## Licencia
 Este proyecto se encuentra bajo licencia de "Pablo Prost"

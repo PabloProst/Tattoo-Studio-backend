@@ -4,6 +4,7 @@ import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import { Artist } from "../models/Artists";
 import { Gallery } from "../models/Gallery";
+import { Appointment } from "../models/Appointments";
 
 
 // User register
@@ -243,5 +244,31 @@ const getGallery = async (req: Request, res: Response) => {
   }
 };
 
+// My appointments
+const getAppointmentsUser = async (req:Request, res:Response) => {
+  try {
+    const user_id = req.body.id;
 
-export { addUser, login, profile, updateUser, getArtists, getGallery};
+    const AllYourAppointment = await Appointment.find({
+      where: {
+        user: { id: user_id }
+      }
+    });
+
+    return res.json({
+      success: true,
+      message: "Appointments retrieved",
+      data: AllYourAppointment,
+    });
+  } catch (error) {
+    return res.json({
+      success: false,
+      message: "Appointments cant be retrieved",
+      error: error,
+    });
+  }
+}; 
+
+
+
+export { addUser, login, profile, updateUser, getArtists, getGallery, getAppointmentsUser};

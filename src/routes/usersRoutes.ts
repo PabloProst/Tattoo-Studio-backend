@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addUser, getArtists, getGallery, login, profile, updateUser } from "../controllers/usersControllers";
+import { addUser, getAppointmentsUser, getArtists, getGallery, login, profile, updateUser } from "../controllers/usersControllers";
 import { auth } from "../middlewares/auth";
 
 
@@ -15,5 +15,7 @@ router.get('/profile', auth, profile);
 router.put('/update', auth, updateUser);
 // Get artists list
 router.get('/list', auth, getArtists);
+// My appointments
+router.get('/myappointments', auth, getAppointmentsUser)
 
 export { router };

@@ -116,6 +116,14 @@ Git
                 "id": "11"
            }
 
+     - GET ARTIST APPOINTMENTS 
+
+            GET http://localhost:3430/admin/myappointments
+ 
+           {
+                "id": "2"
+           }
+
 ## Licencia
 Este proyecto se encuentra bajo licencia de "Pablo Prost"
 

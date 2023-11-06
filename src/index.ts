@@ -5,6 +5,7 @@ import { router } from "./routes/usersRoutes";
 import { router as routerGallery } from "./routes/galleryRoutes";
 import { router as routerAdmin } from "./routes/superAdminRoutes";
 import { router as routerAppointment } from "./routes/appointmentsRoutes"
+import { router as routerArist } from "./routes/artistsRoutes";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use('/', router);
 app.use('/', routerGallery);
 app.use('/', routerAdmin);
 app.use('/', routerAppointment);
+app.use('/', routerArist);
 
 // Server running
 app.listen(3430, () => 

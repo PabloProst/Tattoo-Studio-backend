@@ -2,6 +2,7 @@ import { Router } from "express";
 import { isSuperAdmin } from "../middlewares/isSuperAdmin";
 import { addArtist, deleteUser, getAllUsers, loginArtist } from "../controllers/superAdminControllers";
 import { auth } from "../middlewares/auth";
+import { isArtist } from "../middlewares/isArtist";
 
 
 const router = Router()

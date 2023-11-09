@@ -1,53 +1,62 @@
 import { Request, Response } from 'express';
 import { Appointment } from '../models/Appointments';
 
-
 // New appointment
-const verifyUserId = (userId: string) => {
+const verifyUser_id = (user_id: string) => {
     return true;
 };
-const verifyArtistId = (artistId: string) => {
+const verifyArtist_id = (artist_id: string) => {
     return true;
 };
 
 const createAppointment = async (req: Request, res: Response) => {
     try {
-        const { user, artist, time } = req.body;
+        const { user, artist, date, time } = req.body;
         const dateFormatRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/;
+        const timeFormatRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 
-        if (!dateFormatRegex.test(time)) {
+
+        if (!dateFormatRegex.test(date)) {
             return res.status(400).json({
                 success: false,
-                message: `Formato incorrecto. Utiliza dd/mm/yy.`,
+                message: `Incorrect date format dd/mm/yy.`,
             });
         }
 
-        const isValidUser = verifyUserId(user);
-        const isValidArtist = verifyArtistId(artist);
+        if (!timeFormatRegex.test(time)) {
+            return res.status(400).json({
+                success: false,
+                message: `Incorrect time format hh:mm.`,
+            });
+        }
+
+        const isValidUser = verifyUser_id(user);
+        const isValidArtist = verifyArtist_id(artist);
 
         if (!isValidUser || !isValidArtist) {
             return res.status(400).json({
                 success: false,
-                message: `ID de usuario o artista no válido.`,
+                message: `Invalid user or artist.`,
             });
         }
 
         if (user !== req.token.id) {
             return res.status(403).json({
                 success: false,
-                message: `No autorizado. Solo puedes crear citas para tu propio ID de usuario.`,
+                message: `Not auth. You can only create appointments for you.`,
             });
         }
 
         const appointment = new Appointment();
         appointment.user = user;
         appointment.artist = artist;
+        appointment.date = date;
         appointment.time = time;
         await appointment.save();
 
         return res.json({
             success: true,
-            message: `Cita creada correctamente`,
+            message: `Appointment created succesfully`,
             appointment,
         });
     } catch (error) {
@@ -55,7 +64,7 @@ const createAppointment = async (req: Request, res: Response) => {
 
         return res.status(500).json({
             success: false,
-            message: `Error al crear la cita`,
+            message: `Error creaating appointment`,
             error: error,
         });
     }
@@ -90,20 +99,22 @@ const editAppointment = async (req: Request, res:Response) => {
     }
 };
 
-
-
-
 // Delete appointment
-const deleteAppointment = async (req:Request, res:Response) => {
+const deleteAppointment = async (req: Request, res: Response) => {
     try {
-        const { id } = req.body;
-
-        const appointment = await Appointment.findOne(id);
+        const { appointment_id } = req.body; 
+        const user_id = req.token.id;
+        const appointment = await Appointment.findOne({
+            where: {
+                id: appointment_id,
+                user: { id: user_id } 
+            }
+        });
 
         if (!appointment) {
             return res.status(404).json({
                 success: false,
-                message: `Appointment not found`,
+                message: `No appointment`,
             });
         }
 
@@ -111,7 +122,7 @@ const deleteAppointment = async (req:Request, res:Response) => {
 
         return res.json({
             success: true,
-            message: `Appointment deleted succesfully`,
+            message: `Appointment deleted successfully`,
         });
 
     } catch (error) {
@@ -119,7 +130,7 @@ const deleteAppointment = async (req:Request, res:Response) => {
 
         return res.status(500).json({
             success: false,
-            message: `Error deleting the appointment`,
+            message: `Error deleting appointment`,
             error: error,
         });
     }

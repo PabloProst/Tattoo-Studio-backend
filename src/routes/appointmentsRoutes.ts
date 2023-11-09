@@ -10,6 +10,7 @@ router.post('/appointment/new', auth, createAppointment)
 // Edit appointment
 router.put('/appointment/modify', auth, editAppointment)
 // Delete appointment
-router.delete('/appointment/delete', deleteAppointment)
+router.delete('/appointment/delete',auth, deleteAppointment)
+
 
 export { router }

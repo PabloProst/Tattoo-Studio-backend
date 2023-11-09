@@ -190,15 +190,7 @@ const updateUser = async (req: Request, res: Response) => {
 // List artists
 const getArtists = async (req: Request, res: Response) => {
   try {
-
-    const pageSize = parseInt(req.query.skip as string) || 10
-    const page = parseInt(req.query.page as string) || 1
-
-    const skip = (page - 1) * pageSize;
-
     const users = await Artist.find({
-      skip: skip,
-      take: pageSize,
     });
 
     return res.json(

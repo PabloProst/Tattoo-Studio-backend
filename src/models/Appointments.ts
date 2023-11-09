@@ -9,6 +9,9 @@ export class Appointment extends BaseEntity{
   id!: number
 
   @Column()
+  date!:string
+
+  @Column()
   time!:string
   
   @Column({ default: () => 'CURRENT_TIMESTAMP' })

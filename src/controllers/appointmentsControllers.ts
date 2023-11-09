@@ -11,7 +11,7 @@ const createAppointment = async (req: Request, res: Response) => {
         if (!dateFormatRegex.test(time)) {
             return res.status(400).json({
                 success: false,
-                message: "El formato de la fecha es incorrecto. Debe ser dd/mm/yy",
+                message: `Incorrect format. dd/mm/yy`,
             });
         }
 
@@ -24,7 +24,7 @@ const createAppointment = async (req: Request, res: Response) => {
 
         return res.json({
             success: true,
-            message: "Cita creada exitosamente",
+            message: `Appointment created succesfully`,
             appointment,
         });
     } catch (error) {
@@ -32,7 +32,7 @@ const createAppointment = async (req: Request, res: Response) => {
 
         return res.status(500).json({
             success: false,
-            message: "Error al crear la cita",
+            message: `Error creating appointment`,
             error: error,
         });
     }
@@ -55,14 +55,14 @@ const editAppointment = async (req: Request, res:Response) => {
 
         return res.json({
             success: true,
-            message: "Cita actualizada exitosamente",
+            message: `Appointment updated succesfully`,
         });
 
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             success: false,
-            message: "Error al editar la cita",
+            message: `Error updating the appointment`,
             error: error,
         });
     }
@@ -81,7 +81,7 @@ const deleteAppointment = async (req:Request, res:Response) => {
         if (!appointment) {
             return res.status(404).json({
                 success: false,
-                message: "Cita no encontrada",
+                message: `Appointment not found`,
             });
         }
 
@@ -89,7 +89,7 @@ const deleteAppointment = async (req:Request, res:Response) => {
 
         return res.json({
             success: true,
-            message: "Cita eliminada exitosamente",
+            message: `Appointment deleted succesfully`,
         });
 
     } catch (error) {
@@ -97,7 +97,7 @@ const deleteAppointment = async (req:Request, res:Response) => {
 
         return res.status(500).json({
             success: false,
-            message: "Error al eliminar la cita",
+            message: `Error deleting the appointment`,
             error: error,
         });
     }

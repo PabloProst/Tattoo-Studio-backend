@@ -47,7 +47,7 @@ const addUser = async (req: Request, res: Response) => {
     return res.status(500).json(
       {
         success: false,
-        message: `User cant be created.`,
+        message: `User can not be created.`,
         error: error
       }
     );
@@ -127,7 +127,7 @@ const profile = async (req: Request, res: Response) => {
       return res.json(
           {
               success: true,
-              message: "profile user retrieved",
+              message: `profile user retrieved`,
               data: user
           }
       )
@@ -135,7 +135,7 @@ const profile = async (req: Request, res: Response) => {
       return res.json(
         {
           success: false,
-          message: "User profile cant be retrieved",
+          message: `User profile can not be retrieved`,
           error: error
         }
       )
@@ -213,7 +213,7 @@ const getArtists = async (req: Request, res: Response) => {
     return res.json(
       {
         success: false,
-        message: `users cant be retrieved`,
+        message: `users can not be retrieved`,
         error: error
       }
     )
@@ -237,7 +237,7 @@ const getGallery = async (req: Request, res: Response) => {
     return res.json(
       {
         success: false,
-        message: `Gallery cant be retrieved`,
+        message: `Gallery can not be retrieved`,
         error: error
       }
     );
@@ -257,13 +257,13 @@ const getAppointmentsUser = async (req:Request, res:Response) => {
 
     return res.json({
       success: true,
-      message: "Appointments retrieved",
+      message: `Appointments retrieved`,
       data: AllYourAppointment,
     });
   } catch (error) {
     return res.json({
       success: false,
-      message: "Appointments cant be retrieved",
+      message: `Appointments can not be retrieved`,
       error: error,
     });
   }

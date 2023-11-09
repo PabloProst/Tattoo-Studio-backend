@@ -15,13 +15,13 @@ const getAppointmentsArtist = async (req:Request, res:Response) => {
   
       return res.json({
         success: true,
-        message: "Appointments retrieved",
+        message: `Appointments retrieved`,
         data: AllYourAppointment,
       });
     } catch (error) {
       return res.json({
         success: false,
-        message: "Appointments cant be retrieved",
+        message: `Appointments can not be retrieved`,
         error: error,
       });
     }

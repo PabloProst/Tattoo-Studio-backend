@@ -43,7 +43,7 @@ const addArtist = async (req: Request, res: Response) => {
         return res.status(500).json(
             {
                 success: false,
-                message: `Artist can't be created.`,
+                message: `Artist can not be created.`,
                 error: error
             }
         );
@@ -67,7 +67,7 @@ const loginArtist = async (req: Request, res: Response) => {
             return res.status(400).json(
                 {
                     success: false,
-                    message: `EMAIL or password incorrect`,
+                    message: `email or password incorrect`,
                 }
             );
         }
@@ -76,7 +76,7 @@ const loginArtist = async (req: Request, res: Response) => {
             return res.status(400).json(
                 {
                     success: false,
-                    message: `Email or PASSWORD incorrect`,
+                    message: `Email or password incorrect`,
                 }
             );
         }
@@ -148,14 +148,14 @@ const deleteUser = async (req: Request, res: Response) => {
         } else {
             return res.json({
                 success: false,
-                message: `Usuario no encontrado`
+                message: `User was not found`
             });
         }
 
     } catch (error) {
         return res.json({
             success: false,
-            message: `No se pudo eliminar el usuario`,
+            message: `User can not be deleted`,
             error: error
         });
     }

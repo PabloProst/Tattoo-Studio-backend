@@ -3,6 +3,13 @@ import { Appointment } from '../models/Appointments';
 
 
 // New appointment
+const verifyUserId = (userId: string) => {
+    return true;
+};
+const verifyArtistId = (artistId: string) => {
+    return true;
+};
+
 const createAppointment = async (req: Request, res: Response) => {
     try {
         const { user, artist, time } = req.body;
@@ -11,7 +18,24 @@ const createAppointment = async (req: Request, res: Response) => {
         if (!dateFormatRegex.test(time)) {
             return res.status(400).json({
                 success: false,
-                message: `Incorrect format. dd/mm/yy`,
+                message: `Formato incorrecto. Utiliza dd/mm/yy.`,
+            });
+        }
+
+        const isValidUser = verifyUserId(user);
+        const isValidArtist = verifyArtistId(artist);
+
+        if (!isValidUser || !isValidArtist) {
+            return res.status(400).json({
+                success: false,
+                message: `ID de usuario o artista no válido.`,
+            });
+        }
+
+        if (user !== req.token.id) {
+            return res.status(403).json({
+                success: false,
+                message: `No autorizado. Solo puedes crear citas para tu propio ID de usuario.`,
             });
         }
 
@@ -19,12 +43,11 @@ const createAppointment = async (req: Request, res: Response) => {
         appointment.user = user;
         appointment.artist = artist;
         appointment.time = time;
-
         await appointment.save();
 
         return res.json({
             success: true,
-            message: `Appointment created succesfully`,
+            message: `Cita creada correctamente`,
             appointment,
         });
     } catch (error) {
@@ -32,12 +55,11 @@ const createAppointment = async (req: Request, res: Response) => {
 
         return res.status(500).json({
             success: false,
-            message: `Error creating appointment`,
+            message: `Error al crear la cita`,
             error: error,
         });
     }
 };
-
 
 // Edit appointment
 const editAppointment = async (req: Request, res:Response) => {

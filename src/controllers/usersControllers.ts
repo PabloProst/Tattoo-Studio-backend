@@ -247,13 +247,19 @@ const getGallery = async (req: Request, res: Response) => {
 // My appointments
 const getAppointmentsUser = async (req:Request, res:Response) => {
   try {
-    const user_id = req.body.id;
 
+    const user_id = req.token.id;
     const AllYourAppointment = await Appointment.find({
       where: {
         user: { id: user_id }
       }
     });
+
+    if (AllYourAppointment.length === 0) {
+      return res.json({
+        message: `No appointments`
+      });
+    }
 
     return res.json({
       success: true,
@@ -268,7 +274,5 @@ const getAppointmentsUser = async (req:Request, res:Response) => {
     });
   }
 }; 
-
-
 
 export { addUser, login, profile, updateUser, getArtists, getGallery, getAppointmentsUser};

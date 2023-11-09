@@ -97,7 +97,7 @@ const loginArtist = async (req: Request, res: Response) => {
         return res.json({
             success: true,
             message: `Login successful, welcome ${artist.name}`,
-            user_id: artist.id,
+            artist_id: artist.id,
             email: artist.email,
             token: token,
             role: artist.role

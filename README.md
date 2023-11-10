@@ -1,11 +1,4 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-HDE/ZqzmAfL3J4PcZZ7rWn04jzFgxr1ZzH/R1UB/4aZIqyVlHqphWu26NT4IqRYYH" crossorigin="anonymous">
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h1 style="text-align: center; font-size: 46px; font-weight: bold;">
-    ☾ - 
-    <span style="text-decoration: underline;">TATTOO STUDIO BACKEND</span>
-    - ☽
-</h1>
-
+<h1 align="center">☾ - TATTOO STUDIO BACKEND - ☽</p></h1>
 
 ---
 ### ✪ [Enlace al repositorio](https://github.com/PabloProst/Tattoo-Studio-backend)

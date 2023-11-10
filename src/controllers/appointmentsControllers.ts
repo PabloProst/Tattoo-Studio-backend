@@ -133,6 +133,4 @@ const deleteAppointment = async (req: Request, res: Response) => {
     }
 };
 
-
-
 export { createAppointment, updateAppointment, deleteAppointment }

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha384-HDE/ZqzmAfL3J4PcZZ7rWn04jzFgxr1ZzH/R1UB/4aZIqyVlHqphWu26NT4IqRYYH" crossorigin="anonymous">
 
-<h1 style="text-align: center; font-size: 46px; font-weight: bold;">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<h1 style="text-align: center; font-size: 46px; font-weight: bold;">
     ☾ - 
     <span style="text-decoration: underline;">TATTOO STUDIO BACKEND</span>
     - ☽
@@ -30,13 +30,13 @@
 
 ## Tecnologías utilizadas:
 
+#### ✒︎ MySQL
+#### ✒︎ JavaScript
+#### ✒︎ Postman
+#### ✒︎ Github
+#### ✒︎ Node
+#### ✒︎ Nodemon
 
-####<i class="fas fa-database"></i> MySQL
-####<i class="fab fa-js"></i> JavaScript
-####<i class="fa-solid fa-signs-post"></i>Postman
-####<i class="fa-brands fa-github"></i> Github
-####<i class="fa-brands fa-node-js"></i> Node
-####<i class="fa-solid fa-gear"></i>Nodemon
 ---
 ## &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:rocket: DIAGRAMA BBDD :rocket:
 

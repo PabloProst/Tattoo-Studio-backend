@@ -24,7 +24,7 @@
 ## Tecnologías utilizadas:
 
 #### ✒︎ MySQL
-#### ✒︎ JavaScript
+#### ✒︎ Typescript
 #### ✒︎ Postman
 #### ✒︎ Github
 #### ✒︎ Node

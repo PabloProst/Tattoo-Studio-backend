@@ -6,6 +6,7 @@ import { router as routerGallery } from "./routes/galleryRoutes";
 import { router as routerAdmin } from "./routes/superAdminRoutes";
 import { router as routerAppointment } from "./routes/appointmentsRoutes"
 import { router as routerArist } from "./routes/artistsRoutes";
+import cors from "cors";
 
 const app = express();
 
@@ -14,6 +15,7 @@ const PORT = process.env.PORT || 3430;
 
 //middleware
 app.use(express.json());
+app.use(cors())
 
 // Routes
 app.use('/', router);

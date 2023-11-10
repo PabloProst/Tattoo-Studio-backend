@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Appointment } from '../models/Appointments';
+import { getRepository } from 'typeorm';
 
 // New appointment
 const verifyUser_id = (user_id: string) => {
@@ -71,33 +72,29 @@ const createAppointment = async (req: Request, res: Response) => {
 };
 
 // Edit appointment
-const editAppointment = async (req: Request, res:Response) => {
-    try {
-        const { user, artist, time } = req.body;
+const updateAppointment = async (req: Request, res: Response) => {
+  try {
+    const { id, date, time } = req.body;
+    const userId = req.token.id;
 
-        const query = `
-            UPDATE appointments
-            SET user_id = ?, artist_id = ?, time = ?
-            WHERE id = ?;
-        `;
-        const values = [user, artist, time, req.params.appointmentId]; 
+    const appointment = await Appointment.findOne({
+      where: { id, user: { id: userId } },
+    });
 
-        await Appointment.query(query, values);
-
-        return res.json({
-            success: true,
-            message: `Appointment updated succesfully`,
-        });
-
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: `Error updating the appointment`,
-            error: error,
-        });
+    if (!appointment) {
+      return res.status(404).json({ message: 'Cita no encontrada' });
     }
-};
+
+    appointment.date = date;
+    appointment.time = time;
+    await appointment.save();
+
+    return res.json({ message: 'Cita actualizada exitosamente' });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'Error interno del servidor' });
+  }
+};  
 
 // Delete appointment
 const deleteAppointment = async (req: Request, res: Response) => {
@@ -137,4 +134,5 @@ const deleteAppointment = async (req: Request, res: Response) => {
 };
 
 
-export { createAppointment, editAppointment, deleteAppointment }
+
+export { createAppointment, updateAppointment, deleteAppointment }

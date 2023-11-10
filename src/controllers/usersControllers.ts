@@ -190,14 +190,14 @@ const updateUser = async (req: Request, res: Response) => {
 // List artists
 const getArtists = async (req: Request, res: Response) => {
   try {
-    const users = await Artist.find({
+    const listArtist = await Artist.find({
     });
 
     return res.json(
       {
         success: true,
         message: `Artists retrieved`,
-        data: users
+        data: listArtist
       }
     )
 
@@ -205,7 +205,7 @@ const getArtists = async (req: Request, res: Response) => {
     return res.json(
       {
         success: false,
-        message: `users can not be retrieved`,
+        message: `Artists can not be retrieved`,
         error: error
       }
     )

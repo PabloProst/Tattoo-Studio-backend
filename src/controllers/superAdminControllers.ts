@@ -3,6 +3,7 @@ import { Artist } from "../models/Artists";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../models/User";
+import { Appointment } from "../models/Appointments";
 
 // New artist
 const addArtist = async (req: Request, res: Response) => {
@@ -119,10 +120,12 @@ const loginArtist = async (req: Request, res: Response) => {
 const getAllUsers = async (req: Request, res: Response) => {
     try {
         const users = await User.find();
+        console.log(users);
 
         return res.json({
             users
         });
+        
 
     } catch (error) {
         return res.json({
@@ -132,6 +135,38 @@ const getAllUsers = async (req: Request, res: Response) => {
         });
     }
 };
+
+// Get all Appointments
+const getAllAppointments = async (req: Request, res: Response) => {
+    try {
+        const appointments = await Appointment.find({
+            select: [
+                "id",
+                "date",
+                "time",
+                "created_at",
+                "updated_at",
+                "user",     
+                "artist",     
+            ],
+            relations: ["user", "artist"],
+        });
+        console.log(appointments);
+
+        return res.json({
+            appointments,
+        });
+
+    } catch (error) {
+        console.error(error);
+        return res.json({
+            success: false,
+            message: `Appointments can't be retrieved`,
+            error: error,
+        });
+    }
+};
+
 
 
 // Delete user
@@ -164,5 +199,5 @@ const deleteUser = async (req: Request, res: Response) => {
 
 
 
-export { addArtist, loginArtist, getAllUsers, deleteUser }
+export { addArtist, loginArtist, getAllUsers, deleteUser, getAllAppointments }
 

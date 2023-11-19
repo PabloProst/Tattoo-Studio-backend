@@ -10,11 +10,11 @@ router.post('/register', addUser);
 // User login
 router.post('/login', login);
 // Profile
-router.get('/profile', auth, profile);
+router.get('/profile', profile);
 // Update user
 router.put('/update', auth, updateUser);
 // Get artists list
-router.get('/list', auth, getArtists);
+router.get('/list', getArtists);
 // My appointments
 router.get('/myappointments', auth, getAppointmentsUser)
 

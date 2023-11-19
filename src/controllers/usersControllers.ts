@@ -101,6 +101,8 @@ const login = async (req: Request, res: Response) => {
       message: `Login successful, welcome ${user.name}`,
       user_id: user.id,
       email: user.email,
+      name: user.name,
+      password: user.password,
       token: token
     });
 
@@ -142,50 +144,50 @@ const profile = async (req: Request, res: Response) => {
   }
 }
 
-// Update user
 const updateUser = async (req: Request, res: Response) => {
   try {
-    const iddeuser = req.token.id;
-    const { email, password } = req.body;
+    const userId = req.token.id;
+    const { email, name } = req.body;
+
+    console.log(`Updating user with ID: ${userId}`);
+
+    const updates: any = {}; // Usamos 'any' para aceptar tanto email como name
 
     if (email) {
       const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
       if (!emailRegex.test(email)) {
+        console.log(`Invalid email address: ${email}`);
         return res.json({ mensaje: `Invalid email address.` });
       }
+
+      updates.email = email;
+      console.log(`Email updated successfully: ${email}`);
     }
 
-    if (password) {
-      const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
-
-      if (!passwordRegex.test(password)) {
-        return res.json({
-          mensaje: `The password must be at least 8 characters long, include at least one number, and have a special character.`
-        });
-      }
-
-      const encryptedPassword = bcrypt.hashSync(password, 10);
-
-      await User.update(iddeuser, { password: encryptedPassword });
+    if (name) {
+      updates.name = name;
+      console.log(`Name updated successfully: ${name}`);
     }
 
-    if (email) {
-      await User.update(iddeuser, { email });
-    }
-
+    await User.update(userId, updates);
+    console.log(`User updated successfully`);
     return res.json({
       success: true,
       message: `User information updated successfully.`
     });
   } catch (error) {
+    console.error(`Error updating user information: ${error}`);
     return res.status(500).json({
       success: false,
       message: `Error updating user information.`,
       error: error
     });
   }
-}
+};
+
+
+
 
 // List artists
 const getArtists = async (req: Request, res: Response) => {
@@ -236,22 +238,25 @@ const getGallery = async (req: Request, res: Response) => {
   }
 };
 
+
 // My appointments
 const getAppointmentsUser = async (req:Request, res:Response) => {
   try {
 
     const user_id = req.token.id;
+    
     const AllYourAppointment = await Appointment.find({
       where: {
         user: { id: user_id }
       }
     });
-
+    
     if (AllYourAppointment.length === 0) {
       return res.json({
         message: `No appointments`
       });
     }
+    console.log(user_id);
 
     return res.json({
       success: true,

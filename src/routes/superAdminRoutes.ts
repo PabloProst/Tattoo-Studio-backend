@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { isSuperAdmin } from "../middlewares/isSuperAdmin";
-import { addArtist, deleteUser, getAllUsers, loginArtist } from "../controllers/superAdminControllers";
+import { addArtist, deleteUser, getAllAppointments, getAllUsers, loginArtist } from "../controllers/superAdminControllers";
 import { auth } from "../middlewares/auth";
 
 const router = Router()
@@ -10,8 +10,10 @@ router.post('/admin/register', auth, isSuperAdmin, addArtist)
 // Admin login
 router.post('/admin/login', loginArtist)
 // Users list
-router.get('/admin/users', auth, isSuperAdmin, getAllUsers)
+router.get('/admin/users', getAllUsers)
 // Delete user
 router.delete('/admin/delete', auth, isSuperAdmin, deleteUser)
+// All Appointments
+router.get('/admin/allappointments', getAllAppointments)
 
 export { router }

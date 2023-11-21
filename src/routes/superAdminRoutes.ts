@@ -10,10 +10,10 @@ router.post('/admin/register', auth, isSuperAdmin, addArtist)
 // Admin login
 router.post('/admin/login', loginArtist)
 // Users list
-router.get('/admin/users', getAllUsers)
+router.get('/admin/users',auth, getAllUsers)
 // Delete user
 router.delete('/admin/delete', auth, isSuperAdmin, deleteUser)
 // All Appointments
-router.get('/admin/allappointments', getAllAppointments)
+router.get('/admin/allappointments',auth, getAllAppointments)
 
 export { router }

@@ -248,7 +248,8 @@ const getAppointmentsUser = async (req:Request, res:Response) => {
     const AllYourAppointment = await Appointment.find({
       where: {
         user: { id: user_id }
-      }
+      },
+      relations: ['artist']
     });
     
     if (AllYourAppointment.length === 0) {
@@ -256,7 +257,6 @@ const getAppointmentsUser = async (req:Request, res:Response) => {
         message: `No appointments`
       });
     }
-    console.log(user_id);
 
     return res.json({
       success: true,
@@ -264,6 +264,8 @@ const getAppointmentsUser = async (req:Request, res:Response) => {
       data: AllYourAppointment,
     });
   } catch (error) {
+    console.log(error);
+    
     return res.json({
       success: false,
       message: `Appointments can not be retrieved`,

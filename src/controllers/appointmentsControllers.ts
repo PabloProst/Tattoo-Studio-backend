@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import { Appointment } from '../models/Appointments';
-import { getRepository } from 'typeorm';
 
 // New appointment
 const verifyUser_id = (user_id: string) => {

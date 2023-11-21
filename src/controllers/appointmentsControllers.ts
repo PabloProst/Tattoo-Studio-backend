@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Appointment } from '../models/Appointments';
+import { User } from '../models/User';
 
 // New appointment
 const verifyUser_id = (user_id: string) => {
@@ -11,64 +12,64 @@ const verifyArtist_id = (artist_id: string) => {
 
 const createAppointment = async (req: Request, res: Response) => {
     try {
-        const { user, artist, date, time } = req.body;
+        const { artist, date, time } = req.body;
         const dateFormatRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/;
         const timeFormatRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
-
 
         if (!dateFormatRegex.test(date)) {
             return res.status(400).json({
                 success: false,
-                message: `Incorrect date format dd/mm/yy.`,
+                message: `Formato de fecha incorrecto dd/mm/yy.`,
             });
         }
 
         if (!timeFormatRegex.test(time)) {
             return res.status(400).json({
                 success: false,
-                message: `Incorrect time format hh:mm.`,
+                message: `Formato de hora incorrecto hh:mm.`,
             });
         }
 
-        const isValidUser = verifyUser_id(user);
         const isValidArtist = verifyArtist_id(artist);
 
-        if (!isValidUser || !isValidArtist) {
+        if (!isValidArtist) {
             return res.status(400).json({
                 success: false,
-                message: `Invalid user or artist.`,
+                message: `Artista inválido.`,
             });
         }
 
-        if (user !== req.token.id) {
+        if (req.token && req.token.id) {
+            const appointment = new Appointment();
+            appointment.user = { id: req.token.id } as User;
+            appointment.artist = artist;
+            appointment.date = date;
+            appointment.time = time;
+            await appointment.save();
+
+            return res.json({
+                success: true,
+                message: `Cita creada exitosamente`,
+                appointment,
+            });
+        } else {
             return res.status(403).json({
                 success: false,
-                message: `Not auth. You can only create appointments for you.`,
+                message: `No autorizado. El token no contiene un ID de usuario válido.`,
             });
         }
-
-        const appointment = new Appointment();
-        appointment.user = user;
-        appointment.artist = artist;
-        appointment.date = date;
-        appointment.time = time;
-        await appointment.save();
-
-        return res.json({
-            success: true,
-            message: `Appointment created succesfully`,
-            appointment,
-        });
     } catch (error) {
         console.log(error);
 
         return res.status(500).json({
             success: false,
-            message: `Error creaating appointment`,
+            message: `Error creando la cita`,
             error: error,
         });
     }
 };
+
+
 
 // Edit appointment
 const updateAppointment = async (req: Request, res: Response) => {

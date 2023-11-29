@@ -249,7 +249,7 @@ const getAppointmentsUser = async (req:Request, res:Response) => {
       where: {
         user: { id: user_id }
       },
-      relations: ['artist']
+      relations: ['artist', 'user']
     });
     
     if (AllYourAppointment.length === 0) {

@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addUser, getAppointmentsUser, getArtists, getGallery, login, profile, updateUser } from "../controllers/usersControllers";
+import { addUser, getAppointmentsUser, getArtists, login, profile, updateUser } from "../controllers/usersControllers";
 import { auth } from "../middlewares/auth";
 
 

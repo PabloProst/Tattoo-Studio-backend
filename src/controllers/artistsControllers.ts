@@ -9,7 +9,8 @@ const getAppointmentsArtist = async (req:Request, res:Response) => {
       const AllYourAppointment = await Appointment.find({
         where: {
           artist: { id: artist_id }
-        }
+        },
+        relations: ['user']
       });
       
       return res.json({
@@ -18,6 +19,8 @@ const getAppointmentsArtist = async (req:Request, res:Response) => {
         data: AllYourAppointment,
       });
     } catch (error) {
+      console.log(error);
+      
       return res.json({
         success: false,
         message: `Appointments can not be retrieved`,

@@ -12,34 +12,48 @@ const verifyArtist_id = (artist_id: string) => {
 
 const createAppointment = async (req: Request, res: Response) => {
     try {
+        console.log('Inicio de la función createAppointment');
+
         const { artist, date, time } = req.body;
-        const dateFormatRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{2}$/;
+        const dateFormatRegex = /^\d{4}-\d{2}-\d{2}$/;
         const timeFormatRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
 
         if (!dateFormatRegex.test(date)) {
+            console.log('Formato de fecha incorrecto:', date);
             return res.status(400).json({
                 success: false,
                 message: `Formato de fecha incorrecto dd/mm/yy.`,
             });
         }
 
+        console.log('Después de la validación de fecha');
+
+
         if (!timeFormatRegex.test(time)) {
+            console.log('Formato de hora incorrecto:', time);
             return res.status(400).json({
                 success: false,
                 message: `Formato de hora incorrecto hh:mm.`,
             });
         }
 
+        console.log('Después de la validación de hora');
+
         const isValidArtist = verifyArtist_id(artist);
 
         if (!isValidArtist) {
+            console.log('Artista inválido:', artist);
             return res.status(400).json({
                 success: false,
                 message: `Artista inválido.`,
             });
         }
 
+        console.log('Después de la validación de artista');
+
         if (req.token && req.token.id) {
+            console.log('Antes de la creación de la cita');
+
             const appointment = new Appointment();
             appointment.user = { id: req.token.id } as User;
             appointment.artist = artist;
@@ -47,19 +61,22 @@ const createAppointment = async (req: Request, res: Response) => {
             appointment.time = time;
             await appointment.save();
 
+            console.log('Después de la creación de la cita');
+
             return res.json({
                 success: true,
                 message: `Cita creada exitosamente`,
                 appointment,
             });
         } else {
+            console.log('No autorizado. Token no contiene un ID de usuario válido.');
             return res.status(403).json({
                 success: false,
                 message: `No autorizado. El token no contiene un ID de usuario válido.`,
             });
         }
     } catch (error) {
-        console.log(error);
+        console.error('Error creando la cita:', error);
 
         return res.status(500).json({
             success: false,
@@ -71,30 +88,36 @@ const createAppointment = async (req: Request, res: Response) => {
 
 
 
+
 // Edit appointment
 const updateAppointment = async (req: Request, res: Response) => {
-  try {
-    const { id, date, time } = req.body;
-    const userId = req.token.id;
-
-    const appointment = await Appointment.findOne({
-      where: { id, user: { id: userId } },
-    });
-
-    if (!appointment) {
-      return res.status(404).json({ message: 'Cita no encontrada' });
+    try {
+      const { id, date, time } = req.body;
+      const userId = req.token.id;
+  
+      console.log('ID del usuario desde el token:', userId);
+      console.log('Datos de la cita a modificar:', { id, date, time });
+  
+      const appointment = await Appointment.findOne({
+        where: { id, user: { id: userId } },
+      });
+  
+      if (!appointment) {
+        console.log('Cita no encontrada');
+        return res.status(404).json({ message: 'Cita no encontrada' });
+      }
+  
+      appointment.date = date;
+      appointment.time = time;
+      await appointment.save();
+  
+      console.log('Cita actualizada exitosamente');
+      return res.json({ message: 'Cita actualizada exitosamente' });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: 'Error interno del servidor' });
     }
-
-    appointment.date = date;
-    appointment.time = time;
-    await appointment.save();
-
-    return res.json({ message: 'Cita actualizada exitosamente' });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: 'Error interno del servidor' });
-  }
-};  
+  };
 
 // Delete appointment
 const deleteAppointment = async (req: Request, res: Response) => {
@@ -106,6 +129,7 @@ const deleteAppointment = async (req: Request, res: Response) => {
                 id: appointment_id,
                 user: { id: user_id } 
             }
+
         });
 
         if (!appointment) {
